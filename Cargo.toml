@@ -5,9 +5,15 @@ authors = ["crome <crome110mine@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+rocket = "*"
 chrono = "0.4"
 serde = "*"
 serde_derive = "*"
 serde_json = "1"
 num-traits = "*"
 num-derive = "*"
+
+[dependencies.rocket_contrib]
+version = "*"
+default-features = false
+features = ["json", "tera_templates"]

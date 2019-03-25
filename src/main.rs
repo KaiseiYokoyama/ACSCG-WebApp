@@ -1,5 +1,9 @@
+#![feature(proc_macro_hygiene, decl_macro, const_vec_new)]
+
 extern crate chrono;
 extern crate serde;
+#[macro_use]
+extern crate rocket;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
@@ -7,6 +11,7 @@ extern crate num_traits;
 extern crate num_derive;
 
 mod structs;
+mod rocket_server;
 
 use std::env;
 use std::fs::File;
@@ -15,24 +20,15 @@ use crate::structs::input::Input;
 use crate::structs::web::css::MakerCSSs;
 use num_traits::FromPrimitive;
 
-fn main() {
-    // 実行ファイルのpath
-//    let program: String = env::args().next().unwrap();
-    // 実行時引数
-    let args: Vec<String> = env::args().skip(1).collect();
-    if args.len() == 0 {
-        println!("Illegal Arguments");
-        return;
-    }
-    // 入力ファイルへのpath
-    let path = &args[0];
-    // 入力ファイルの内容
-    let input = std::fs::read_to_string(path).expect("ファイルを正しく読み込めませんでした");
+pub fn main() {
+    rocket_server::launch();
+}
+
+pub fn create_calendar(json: String) -> String {
     // struct Input化した入力ファイル
-    let input: Input = serde_json::from_str(&input).expect("ファイルの内容が不正です");
+    let input: Input = serde_json::from_str(&json).unwrap();
 
     let mut limit_of_events = 0;
-
     loop {
         match MakerCSSs::from_i32(limit_of_events) {
             None => break,
@@ -41,23 +37,13 @@ fn main() {
     }
     if input.events.len() > limit_of_events as usize {
         println!("イベントの種類は{}つまでです", limit_of_events);
-        return;
+        return String::new();
     }
 
     // html生成
     let html = create_html::create(input);
 
-
-    let file =
-        // 出力ファイル名の指定を受けているとき
-        if args.len() >= 2 {
-            File::create(&args[1]).expect("Unable to create file")
-        } else {
-            File::create("calendar.html").unwrap()
-        };
-    let mut buf = BufWriter::new(file);
-    buf.write(html.as_bytes()).unwrap();
-    buf.flush().unwrap();
+    return html;
 }
 
 pub mod create_html {
