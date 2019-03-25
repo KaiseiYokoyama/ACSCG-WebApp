@@ -1,0 +1,96 @@
+#input-form {
+  padding: 20px 40px;
+}
+
+.events {
+  padding: 10px 20px;
+}
+
+.events .collapsible-body {
+  padding: 20px;
+  padding-bottom: 50px;
+}
+
+.events .collapsible-header .title {
+  padding-left: 20px;
+}
+
+.calendar.card {
+  padding: 0;
+}
+
+.calendar-title {
+  width: 100%;
+  background: #ee6e73;
+  padding: 20px 0;
+}
+
+.calendar-title.row {
+  margin: 0;
+}
+
+.calendar-title i {
+  font-size: 80px;
+  color: #e0e0e0;
+}
+
+.calendar-title .begin {
+  position: relative;
+  left: 0;
+}
+
+.calendar-title .end {
+  position: relative;
+  right: 0;
+}
+
+.calendar-title .date {
+  /* padding: 10px 0; */
+  color: white;
+}
+
+.calendar-title .date .month {
+  font-size: 35px;
+}
+
+.calendar-body {
+  padding: 10px;
+}
+
+.calendar-body tbody tr td span{
+  cursor: pointer;
+}
+
+.circled {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.circled.digit {
+  padding-right: 14px;
+  padding-left: 14px;
+}
+
+td.selected > .circled {
+  color: white;
+  background-color: #4db6ac;
+}
+
+.style > .color, .style > .shadow {
+  padding: 10px;
+  padding-left: 20px;
+}
+
+.color-picker.row {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.color-picker.row .col {
+  height: 40px;
+  margin: 2px;
+}
+
+.shadow_checkbox {
+  margin-left: 20px;
+}
