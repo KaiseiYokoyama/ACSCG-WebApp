@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新歓カレンダージェネレーター</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- material icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./index.css">
+    <script src="./index.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo center">新歓カレンダージェネレーター</a>
+        </div>
+    </nav>
+    <main>
+        <body>
+            <div class="container">
+                <div class="card" id="input-form">
+                    <div class="row title">
+                        <div class="col m12 input-field">
+                            <i class="material-icons prefix">calendar_today</i>
+                            <input id="calendar_title" type="text" class="validate">
+                            <label for="calendar_title">タイトル</label>
+                        </div>
+                    </div>
+                    <div class="row schedules">
+                        <h4>
+                            <span>Events</span>
+                            <i class="material-icons left">schedule</i>
+                            <span class="right">
+                                    <a class="btn">add<i class="material-icons left">add</i></a>
+                            </span>
+                        </h4>                        
+                        <ul class="collapsible expandable popout events">
+                            <li>
+                                <div class="collapsible-header valign-wrapper">
+                                    <span class="circled" style="background-color: #F44336;"><span style="visibility: hidden;">10</span></span>
+                                    <span class="title">Event Name</span>
+                                </div>
+                                <div class="row collapsible-body input-form">
+                                    <div class="title col m12">
+                                        <h5>
+                                            <span>Event Title</span>
+                                            <i class="material-icons left">title</i>
+                                        </h5>        
+                                        <div class="input-field">
+                                            <input value="Event Name" class="event_title" placeholder="Event Title" type="text" class="validate" onkeypress="setTitle(this,event.keyCode);">
+                                        </div>                
+                                    </div>
+                                    <div class="date col m12">
+                                        <h5>
+                                            <span>Date</span>
+                                            <i class="material-icons left">date_range</i>
+                                        </h5>
+                                        <div class="calendars row">
+                                            <div class="calendar col m12 l6" month="4">
+                                                <div class="calendar-title row center-align">
+                                                    <span class="date">
+                                                        <span class="month">April</span>
+                                                        <br>
+                                                        <span class="year">2019</span>
+                                                    </span>
+                                                </div>
+                                                <table class="calendar-body">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="center-align red-text">Sun.</th>
+                                                            <th class="center-align">Mon.</th>
+                                                            <th class="center-align">Tue.</th>
+                                                            <th class="center-align">Wed.</th>
+                                                            <th class="center-align">Thu.</th>
+                                                            <th class="center-align">Fri.</th>
+                                                            <th class="center-align blue-text">Sat.</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="center-align red-text"></td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">1</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">2</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">3</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">4</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">5</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text">
+                                                                <span class="digit">6</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text">
+                                                                <span class="digit">7</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">8</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">9</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>10</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>11</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>12</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text">
+                                                                <span>13</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text">
+                                                                <span>14</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>15</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>16</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>17</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>18</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>19</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text">
+                                                                <span>20</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text">
+                                                                <span>21</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>22</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>23</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="circled" event_index="1">24</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>25</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>26</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text">
+                                                                <span>27</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text">
+                                                                <span>28</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>29</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>30</span>
+                                                            </td>
+                                                            <td class="center-align"></td>
+                                                            <td class="center-align"></td>
+                                                            <td class="center-align"></td>
+                                                            <td class="center-align blue-text"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="calendar col m12 l6" month="5">
+                                                <div class="calendar-title row center-align">
+                                                    <span class="date">
+                                                        <span class="month">May</span>
+                                                        <br>
+                                                        <span class="year">2019</span>
+                                                    </span>
+                                                </div>
+                                                <table class="calendar-body">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="center-align red-text">Sun.</th>
+                                                            <th class="center-align">Mon.</th>
+                                                            <th class="center-align">Tue.</th>
+                                                            <th class="center-align">Wed.</th>
+                                                            <th class="center-align">Thu.</th>
+                                                            <th class="center-align">Fri.</th>
+                                                            <th class="center-align blue-text">Sat.</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text"></td>
+                                                            <td onclick="selectDate(this)" class="center-align"></td>
+                                                            <td onclick="selectDate(this)" class="center-align"></td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">1</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">2</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">3</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text">
+                                                                <span class="digit">4</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text">
+                                                                <span class="digit">5</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">6</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">7</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">8</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="digit">9</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>10</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text">
+                                                                <span>11</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text">
+                                                                <span>12</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="circled" event_index="3">13</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="circled" event_index="3">14</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>15</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>16</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>17</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text">
+                                                                <span>18</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text">
+                                                                <span>19</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="circled" event_index="3">20</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="circled" event_index="3">21</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>22</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>23</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>24</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text">
+                                                                <span>25</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td onclick="selectDate(this)" class="center-align red-text">
+                                                                <span>26</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="circled" event_index="3">27</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span class="circled" event_index="3">28</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>29</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>30</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align">
+                                                                <span>31</span>
+                                                            </td>
+                                                            <td onclick="selectDate(this)" class="center-align blue-text"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="style col m12">
+                                        <h5>
+                                            <span>Style</span>
+                                            <i class="material-icons left">style</i>
+                                        </h5>
+                                        <div class="color">
+                                            <h6>
+                                                <span>Color</span>
+                                                <i class="material-icons left">palette</i>
+                                            </h6>
+                                            <div class="color-picker row">
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 red white-text selected"><i class="material-icons">done</i>selected</div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 pink white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 purple white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 deep-purple white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 indigo white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 blue white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 light-blue white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 cyan white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 teal white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 green white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 light-green white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 yellow white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 amber white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 orange white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 deep-orange white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 brown white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 grey white-text"></div>
+                                                <div onclick="selectColor(this);" class="valign-wrapper center-align col s4 m3 l2 blue-grey white-text"></div>
+                                            </div>
+                                        </div>
+                                        <div class="shadow">
+                                            <h6>
+                                                <span>Shadow</span>
+                                                <i class="material-icons left">layers</i>
+                                            </h6>
+                                            <div class="shadow_checkbox">
+                                                <label>
+                                                    <input type="checkbox"/>
+                                                    <span onclick="shadowOnOff(this);">apply shadow effect</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="right buttons">
+                                        <a class="btn red delete">
+                                            <span>delete</span>
+                                            <i class="material-icons left">delete</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>        
+            </div>
+        </body>
+    </main>
+</body>
+</html>
