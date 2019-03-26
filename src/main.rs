@@ -128,14 +128,15 @@ pub mod create_html {
     /// html::body::nav領域を作成する
     fn create_nav(input: &Input) -> Element {
         // navigation barのタイトル(ページ最上中央)
-        let mut a = Element::create("a");
-        a.add_class("brand-logo center");
-        a.set_text(&input.title);
+        let mut span = Element::create("span");
+        span.add_class("title");
+        span.set_text(&input.title);
 
         // タイトルのwrapper
         let mut div = Element::create("div");
         div.add_class("nav-wrapper");
-        div.append(a);
+        div.add_class("center-align");
+        div.append(span);
 
         // nav本体
         let mut nav = Element::create("nav");

@@ -38,6 +38,10 @@
     cursor: pointer;
 }
 
+.canvas nav .nav-wrapper .title {
+    font-size: 2.1rem;
+}
+
 .btn-outlined:hover {
     background-color: rgba(38, 166, 154, 0.1);
 }
