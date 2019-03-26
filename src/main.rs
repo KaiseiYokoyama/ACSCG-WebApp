@@ -225,7 +225,7 @@ pub mod create_html {
         // scheduleを月ごとに処理する
         for schedule_monthly in schedules_monthly {
             let mut calendar = Element::create("div");
-            calendar.add_class("calendar");
+            calendar.add_class("calendar col s12 m6");
 
             // 月の名前を取得
             let (ref first_day, _) = schedule_monthly[0];
