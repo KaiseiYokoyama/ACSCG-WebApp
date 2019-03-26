@@ -98,17 +98,28 @@ pub mod create_html {
         materialicons.set_attribute("href", "https://fonts.googleapis.com/icon?family=Material+Icons");
         materialicons.set_attribute("rel", "stylesheet");
 
-        // todo remove
-//        let mut custom = Element::create("link");
-//        custom.set_attribute("rel", "stylesheet");
-//        custom.set_attribute("href", "custom.css");
+        let mut html2canvas = Element::create("script");
+        html2canvas.set_attribute("href", "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js");
+
+        let mut script = Element::create("script");
+        script.set_text(
+            &"document.addEventListener('DOMContentLoaded', function(){\
+                  html2canvas(document.querySelector('body')).then(canvas => {
+                        canvasElement.src = canvas.toDataURL();
+                        linkElement.href = canvas.toDataURL('image/png');
+                        linkElement.download = 'table.png';
+                        linkElement.click();
+                   });\
+            });".to_string()
+        );
 
         // append to head
         head.append(title);
         head.append(materializecss_css);
         head.append(materializecss_js);
         head.append(materialicons);
-//        head.append(custom);
+        head.append(html2canvas);
+        head.append(script);
 
         return head;
     }
@@ -203,7 +214,7 @@ pub mod create_html {
     /// html::body::main::calendars領域を作成する
     fn create_calendar(input: &Input) -> Element {
         let mut calendars = Element::create("div");
-        calendars.add_class("calendars");
+        calendars.add_class("calendars row");
 
         let schedule = calc_calendar(input);
 
@@ -375,6 +386,7 @@ pub mod create_html {
                             // 日付を出力する
                             let mut span = Element::create("span");
                             span.set_text(&format!("{}", index + 1));
+                            if index < 10 { span.add_class("digit"); }
                             // イベントがある日を出力したとき
                             if let Some(event_index) = eve {
                                 span.set_attribute("event_index", &format!("{}", event_index));
@@ -497,7 +509,7 @@ pub mod create_html {
         css_vec.push(css);
 
         let mut css = CSS::create(".calendar-title");
-        css.push_declaration("width", "88vw");
+        css.push_declaration("width", "100%");
         css_vec.push(css);
 
         let mut css = CSS::create(".calendar-title i");

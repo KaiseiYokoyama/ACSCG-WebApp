@@ -50,107 +50,107 @@
   padding: 20px 40px;
 }
 
-.events {
+main.form .events {
   padding: 10px 20px;
 }
 
-.events .collapsible-body {
+main.form .events .collapsible-body {
   padding: 20px;
   padding-bottom: 50px;
 }
 
-.events .collapsible-header .title {
+main.form .events .collapsible-header .title {
   padding-left: 20px;
 }
 
-.events .collapsible-header .secondary-content {
+main.form .events .collapsible-header .secondary-content {
   margin-left: auto;
 }
 
-.events .collapsible-header .secondary-content i.delete {
+main.form .events .collapsible-header .secondary-content i.delete {
   color: #9e9e9e;
 }
 
-.events .collapsible-header .secondary-content i.delete:hover {
+main.form .events .collapsible-header .secondary-content i.delete:hover {
   color: #f44336;
 }
 
-.calendar.card {
+main.form .calendar.card {
   padding: 0;
 }
 
-.calendar-title {
+main.form .calendar-title {
   width: 100%;
   background: #ee6e73;
   padding: 20px 0;
 }
 
-.calendar-title.row {
+main.form .calendar-title.row {
   margin: 0;
 }
 
-.calendar-title i {
+main.form .calendar-title i {
   font-size: 80px;
   color: #e0e0e0;
 }
 
-.calendar-title .begin {
+main.form .calendar-title .begin {
   position: relative;
   left: 0;
 }
 
-.calendar-title .end {
+main.form .calendar-title .end {
   position: relative;
   right: 0;
 }
 
-.calendar-title .date {
+main.form .calendar-title .date {
   /* padding: 10px 0; */
   color: white;
 }
 
-.calendar-title .date .month {
+main.form .calendar-title .date .month {
   font-size: 35px;
 }
 
-.calendar-body {
+main.form .calendar-body {
   padding: 10px;
 }
 
-.calendar-body tbody tr td span{
+main.form .calendar-body tbody tr td span{
   cursor: pointer;
 }
 
-.circled {
+main.form .circled {
   padding: 10px;
   border-radius: 5px;
 }
 
-.circled.digit {
+main.form .circled.digit {
   padding-right: 14px;
   padding-left: 14px;
 }
 
-td.selected > .circled {
+main.form td.selected > .circled {
   color: white;
   background-color: #4db6ac;
 }
 
-.style > .color, .style > .shadow {
+main.form .style > .color, .style > .shadow {
   padding: 10px;
   padding-left: 20px;
 }
 
-.color-picker.row {
+main.form .color-picker.row {
   margin-left: 20px;
   margin-top: 20px;
 }
 
-.color-picker.row .col {
+main.form .color-picker.row .col {
   height: 40px;
   margin: 2px;
 }
 
-.shadow_checkbox {
+main.form .shadow_checkbox {
   margin-left: 20px;
 }
