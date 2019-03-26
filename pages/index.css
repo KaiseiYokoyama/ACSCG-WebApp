@@ -162,3 +162,11 @@ main.form .shadow_checkbox {
 #canvas, #download_link {
     display: none;
 }
+
+.calendars {
+    display: flex;
+}
+
+.calendar {
+    flex-grow: 1;
+}

@@ -201,16 +201,16 @@ pub mod create_html {
     /// html::body::main::calendars領域を作成する
     fn create_calendar(input: &Input) -> Element {
         let mut calendars = Element::create("div");
-        calendars.add_class("calendars row");
+        calendars.add_class("calendars");
 
-        let schedule = calc_calendar(input);
+        let schedules = calc_calendar(input);
 
         // scheduleを月ごとに分ける
         let mut schedules_monthly: Vec<Vec<(NaiveDate, Option<usize>)>> = Vec::new();
         let mut m = 0;
         let mut index = 0;
-        for sch in schedule {
-            let (day, event) = sch;
+        for schedule in schedules {
+            let (day, event) = schedule;
             if m == 0 {
                 m = day.month();
                 schedules_monthly.push(Vec::new());
@@ -225,7 +225,7 @@ pub mod create_html {
         // scheduleを月ごとに処理する
         for schedule_monthly in schedules_monthly {
             let mut calendar = Element::create("div");
-            calendar.add_class("calendar col s12 m6");
+            calendar.add_class("calendar");
 
             // 月の名前を取得
             let (ref first_day, _) = schedule_monthly[0];
@@ -233,14 +233,17 @@ pub mod create_html {
 
             // calendar-title領域を追加
             let title = create_calendar_title(month_name, input.year);
-//            println!("{}", &title.to_string());
             calendar.append(title);
 
-            let table = create_calendar_table(input,&schedule_monthly);
-            calendar.append(table);
-
-            // 格納
-            calendars.append(calendar);
+            let table = create_calendar_table(input, &schedule_monthly);
+            match table {
+                Some(t) => {
+                    calendar.append(t);
+                    // 格納
+                    calendars.append(calendar);
+                }
+                None => {}
+            }
         }
 
         return calendars;
@@ -317,7 +320,7 @@ pub mod create_html {
     }
 
     /// html::body::main::calendars::calendar::table領域を作成する
-    fn create_calendar_table(input: &Input, schedule_monthly: &Vec<(NaiveDate, Option<usize>)>) -> Element {
+    fn create_calendar_table(input: &Input, schedule_monthly: &Vec<(NaiveDate, Option<usize>)>) -> Option<Element> {
         let mut table = Element::create("table");
         table.add_class("calendar-body");
 
@@ -344,6 +347,8 @@ pub mod create_html {
             // tableにtheadを格納
             table.append(thead);
         }
+
+        let mut no_event = true;
 
         // table bodyを整備する
         // カレンダーのマス目の左上から埋めていく
@@ -376,6 +381,7 @@ pub mod create_html {
                             if index < 10 { span.add_class("digit"); }
                             // イベントがある日を出力したとき
                             if let Some(event_index) = eve {
+                                no_event = false;
                                 span.set_attribute("event_index", &format!("{}", event_index));
                                 span.add_class("circled");
                                 // イベントマーカーのshadowが有効なとき
@@ -400,7 +406,8 @@ pub mod create_html {
             table.append(tbody);
         }
 
-        return table;
+        if no_event { return None; }
+        return Some(table);
     }
 
     /// コンピュータ上にカレンダーを再現する
