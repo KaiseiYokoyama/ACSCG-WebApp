@@ -183,7 +183,7 @@ pub mod create_html {
             span_marker.add_class("circled");
             // イベントの名前
             let mut span_description = Element::create("span");
-            span_description.set_text(&input.events[i].name);
+            span_description.set_text(&input.events[i].title);
             span_description.add_class("description");
             // liにspanをそれぞれ追加
             li.append(span_marker);

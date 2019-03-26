@@ -24,7 +24,7 @@
                 <div class="card" id="input-form">
                     <div class="row title">
                         <div class="col m12 input-field">
-                            <i class="material-icons prefix">calendar_today</i>
+                            <i class="material-icons prefix">event_note</i>
                             <input id="calendar_title" type="text" class="validate">
                             <label for="calendar_title">タイトル</label>
                         </div>
@@ -34,7 +34,7 @@
                             <span>Events</span>
                             <i class="material-icons left">schedule</i>
                             <span class="right">
-                                    <a class="btn">add<i class="material-icons left">add</i></a>
+                                    <a class="btn btn-outlined" onclick="addEvent()">add<i class="material-icons left">add</i></a>
                             </span>
                         </h4>                        
                         <ul class="collapsible expandable popout events">
@@ -42,6 +42,9 @@
                                 <div class="collapsible-header valign-wrapper">
                                     <span class="circled" style="background-color: #F44336;"><span style="visibility: hidden;">10</span></span>
                                     <span class="title">Event Name</span>
+                                    <span class="secondary-content">
+                                        <i class="material-icons delete" onclick="deleteEvent(this); event.stopPropagation();">delete</i>
+                                    </span>
                                 </div>
                                 <div class="row collapsible-body input-form">
                                     <div class="title col m12">
@@ -365,16 +368,25 @@
                                             </div>
                                         </div>
                                     </div>
-                    
                                     <div class="right buttons">
-                                        <a class="btn red delete">
+                                        <a class="btn red delete" onclick="deleteEvent(this)">
                                             <span>delete</span>
                                             <i class="material-icons left">delete</i>
                                         </a>
+                                        <a class="btn teal save" onclick="closeCollapsible(this)">
+                                            <span>save</span>
+                                            <i class="material-icons left">done</i>
+                                        </a>    
                                     </div>
                                 </div>
                             </li>
                         </ul>
+                    </div>
+                    <div class="row buttons">
+                        <a class="btn right" onclick="submit()">
+                            <span>Generate calendar</span>
+                            <i class="material-icons left">calendar_today</i>
+                        </a>
                     </div>
                 </div>        
             </div>

@@ -21,6 +21,11 @@ fn index_js() -> Option<NamedFile> {
     NamedFile::open(Path::new("pages/index.js")).ok()
 }
 
+#[post("/generate", data = "<string>")]
+fn generate_calc(string: String) -> String {
+    return crate::create_calendar(string);
+}
+
 pub fn launch() {
     let config = Config::build(Environment::Development)
         .address("localhost")
@@ -31,6 +36,7 @@ pub fn launch() {
         .mount("/", routes![index])
         .mount("/", routes![index_css])
         .mount("/", routes![index_js])
+        .mount("/",routes![generate_calc])
 //        .attach(rocket_contrib::templates::Template::fairing())
         .launch();
 }

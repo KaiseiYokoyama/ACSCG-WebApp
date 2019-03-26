@@ -272,7 +272,7 @@ pub mod input {
         #[derive(Debug, Serialize, Deserialize)]
         pub struct Event {
             // イベント名
-            pub name: String,
+            pub title: String,
             // 日程
             pub dates: Vec<Date>,
         }

@@ -1,3 +1,51 @@
+.btn-outlined {
+  color: #26a69a;
+  display: inline-flex;
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  border-image-outset: 0px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-color: #9e9e9e;
+
+  font-size: 14px;
+
+  height: 36px;
+  line-height: 36px;
+
+  outline-style: none;
+  outline-width: 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+
+  text-transform: uppercase;
+
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-property: background-color;
+  transition-timing-function: ease;
+
+  cursor: pointer;
+}
+
+.btn-outlined:hover {
+  background-color: rgba(38, 166, 154, 0.1);
+}
+
+.btn-outlined i {
+  order: -1;
+}
+
 #input-form {
   padding: 20px 40px;
 }
@@ -13,6 +61,18 @@
 
 .events .collapsible-header .title {
   padding-left: 20px;
+}
+
+.events .collapsible-header .secondary-content {
+  margin-left: auto;
+}
+
+.events .collapsible-header .secondary-content i.delete {
+  color: #9e9e9e;
+}
+
+.events .collapsible-header .secondary-content i.delete:hover {
+  color: #f44336;
 }
 
 .calendar.card {

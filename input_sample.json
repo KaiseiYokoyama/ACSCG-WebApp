@@ -3,7 +3,7 @@
   "title": "Amusement Creators",
   "events": [
     {
-      "name": "合同新歓",
+      "title": "合同新歓",
       "dates": [
         {
           "month": 4,
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "name": "ミーティング",
+      "title": "ミーティング",
       "dates": [
         {
           "month": 4,
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "name": "もくもく会",
+      "title": "もくもく会",
       "dates": [
         {
           "month": 4,
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "name": "ゴールデンウィーク",
+      "title": "ゴールデンウィーク",
       "dates": [
         {
           "month": 4,
