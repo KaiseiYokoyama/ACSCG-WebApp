@@ -170,3 +170,15 @@ main.form .shadow_checkbox {
 .calendar {
     flex-grow: 1;
 }
+
+h4 i.material-icons {
+    font-size: inherit;
+}
+
+.border-none {
+    border: none !important;
+}
+
+.canvas table {
+    width: 95%;
+}

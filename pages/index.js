@@ -5,9 +5,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const elems = document.querySelectorAll('.datepicker');
-    const instances = M.Datepicker.init(elems, {});
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.timepicker');
+    var instances = M.Timepicker.init(elems, {
+        twelveHour: false,
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -17,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function addEvent() {
-    let html = '                     <li>\n' +
+    let html = '<li>\n' +
         '                                <div class="collapsible-header valign-wrapper">\n' +
         '                                    <span class="circled" style="background-color: #F44336;"><span style="visibility: hidden;">10</span></span>\n' +
         '                                    <span class="title">Event Name</span>\n' +
@@ -303,6 +305,26 @@ function addEvent() {
         '                                            </div>\n' +
         '                                        </div>\n' +
         '                                    </div>\n' +
+        '                                    <div class="time col m12 row">\n' +
+        '                                        <h5>\n' +
+        '                                            <span>Time</span>\n' +
+        '                                            <i class="material-icons left">schedule</i>\n' +
+        '                                        </h5>\n' +
+        '                                        <div class="col m5 start">\n' +
+        '                                            <input placeholder="Start" type="text" class="timepicker">\n' +
+        '                                        </div>\n' +
+        '                                        <div class="col m2 center-align"> - </div>\n' +
+        '                                        <div class="col m5 end">\n' +
+        '                                            <input placeholder="End" type="text" class="timepicker">\n' +
+        '                                        </div>\n' +
+        '                                    </div>\n' +
+        '                                    <div class="place col m12">\n' +
+        '                                        <h5>\n' +
+        '                                            <span>Place</span>\n' +
+        '                                            <i class="material-icons left">place</i>\n' +
+        '                                        </h5>\n' +
+        '                                        <input type="text">\n' +
+        '                                    </div>\n' +
         '                                    <div class="style col m12">\n' +
         '                                        <h5>\n' +
         '                                            <span>Style</span>\n' +
@@ -466,6 +488,12 @@ function submit() {
         event['color'] = window.getComputedStyle(li.querySelector('.color-picker .selected')).backgroundColor;
 
         event['shadow'] = li.querySelector('.shadow .shadow_checkbox input[type="checkbox"]').checked;
+
+        event['start'] = li.querySelector('.time .start input').value;
+
+        event['end'] = li.querySelector('.time .end input').value;
+
+        event['place'] = li.querySelector('.place input').value;
 
         events.push(event);
     }

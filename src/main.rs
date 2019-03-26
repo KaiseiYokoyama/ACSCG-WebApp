@@ -163,37 +163,64 @@ pub mod create_html {
     /// html::body::main::header領域を作成する
     fn create_header(input: &Input) -> Element {
         let mut header = Element::create("header");
-        let mut div = Element::create("div");
-        div.add_class("event-description");
+        let mut table = Element::create("table");
+        table.add_class("event-description");
 
         // イベントの説明一覧
-        let mut ul = Element::create("ul");
-        ul.add_class("collection");
+        let mut tbody = Element::create("tbody");
+        tbody.add_class("border-none");
 
         for i in 0..input.events.len() {
             // イベントの説明
-            let mut li = Element::create("li");
-            li.add_class("collection-item");
+            let mut tr = Element::create("tr");
+//            tr.add_class("collection-item");
+
             // カレンダー中でイベントを示すマーカーのサンプル
             let mut span_marker = Element::create("span");
             span_marker.set_text(&"10".to_string());
             span_marker.set_attribute("event_index", &format!("{}", i));
             span_marker.add_class("circled");
+            let mut td = Element::create("td");
+            td.append(span_marker);
+            tr.append(td);
+
             // イベントの名前
             let mut span_description = Element::create("span");
             span_description.set_text(&input.events[i].title);
             span_description.add_class("description");
-            // liにspanをそれぞれ追加
-            li.append(span_marker);
-            li.append(span_description);
-            // ulにliを追加
-            ul.append(li);
+            let mut td = Element::create("td");
+            td.append(span_description);
+            tr.append(td);
+
+            let mut span_start = Element::create("span");
+            span_start.set_text(&input.events[i].start);
+            span_start.add_class("start");
+            let mut td = Element::create("td");
+            td.append(span_start);
+            tr.append(td);
+
+            let mut span_end = Element::create("span");
+            span_end.set_text(&input.events[i].end);
+            span_end.add_class("end");
+            let mut td = Element::create("td");
+            td.append(span_end);
+            tr.append(td);
+
+            let mut span_place = Element::create("span");
+            span_place.set_text(&input.events[i].place);
+            span_place.add_class("place");
+            let mut td = Element::create("td");
+            td.append(span_place);
+            tr.append(td);
+
+            // tableにlrを追加
+            tbody.append(tr);
         }
 
         // divに追加
-        div.append(ul);
+        table.append(tbody);
         // headerに追加
-        header.append(div);
+        header.append(table);
 
         return header;
     }
@@ -257,22 +284,22 @@ pub mod create_html {
         // calendarをhtmlに変換
         {
             // icon left
-            {
-                // wrapper
-                let mut div = Element::create("div");
-                div.add_class("col s2");
-
-                // icon
-                let mut i = Element::create("i");
-                i.add_class("material-icons");
-                i.set_text(&"navigate_before".to_string());
-
-                // wrapperにiconを追加
-                div.append(i);
-
-                // iconのwrapperをtitleに追加
-                title.append(div);
-            }
+//            {
+//                // wrapper
+//                let mut div = Element::create("div");
+//                div.add_class("col s2");
+//
+//                // icon
+//                let mut i = Element::create("i");
+//                i.add_class("material-icons");
+//                i.set_text(&"navigate_before".to_string());
+//
+//                // wrapperにiconを追加
+//                div.append(i);
+//
+//                // iconのwrapperをtitleに追加
+//                title.append(div);
+//            }
 
             // title本体
             {
@@ -298,22 +325,22 @@ pub mod create_html {
             }
 
             // icon right
-            {
-                // wrapper
-                let mut div = Element::create("div");
-                div.add_class("col s2");
-
-                // icon
-                let mut i = Element::create("i");
-                i.add_class("material-icons");
-                i.set_text(&"navigate_next".to_string());
-
-                // wrapperにiconを追加
-                div.append(i);
-
-                // iconのwrapperをtitleに追加
-                title.append(div);
-            }
+//            {
+//                // wrapper
+//                let mut div = Element::create("div");
+//                div.add_class("col s2");
+//
+//                // icon
+//                let mut i = Element::create("i");
+//                i.add_class("material-icons");
+//                i.set_text(&"navigate_next".to_string());
+//
+//                // wrapperにiconを追加
+//                div.append(i);
+//
+//                // iconのwrapperをtitleに追加
+//                title.append(div);
+//            }
         }
 
         return title;

@@ -275,6 +275,12 @@ pub mod input {
             pub title: String,
             // 日程
             pub dates: Vec<Date>,
+            // 開始時間
+            pub start: String,
+            // 終了時間
+            pub end: String,
+            // 場所
+            pub place: String,
             // マーカーの色(cssのrgba形式)
             pub color: String,
             // マーカーに影をつけるかどうか
