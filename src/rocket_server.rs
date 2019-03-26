@@ -21,6 +21,11 @@ fn index_js() -> Option<NamedFile> {
     NamedFile::open(Path::new("pages/index.js")).ok()
 }
 
+#[get("/html2canvas.min.js")]
+fn html2canvas() -> Option<NamedFile> {
+    NamedFile::open(Path::new("pages/html2canvas.min.js")).ok()
+}
+
 #[post("/generate", data = "<string>")]
 fn generate_calc(string: String) -> String {
     return crate::create_calendar(string);
@@ -37,6 +42,7 @@ pub fn launch() {
         .mount("/", routes![index_css])
         .mount("/", routes![index_js])
         .mount("/",routes![generate_calc])
+        .mount("/",routes![html2canvas])
 //        .attach(rocket_contrib::templates::Template::fairing())
         .launch();
 }

@@ -488,13 +488,14 @@ function submit() {
                 '   <span>clear</span>' +
                 '   <i class="material-icons left">close</i>' +
                 '</a>' +
-                '<a onclick="getCalendarImage(this)" class="btn right download-image">' +
+                '<a onclick="downloadCalendarImage(this)" class="btn right download-image">' +
                 '   <span>Download Image</span>' +
                 '   <i class="material-icons left">image</i> ' +
                 '</a>';
             div.appendChild(cardAction);
 
             document.querySelector('body .canvases').appendChild(div);
+            div.scrollIntoView();
         }
     };
     xhr.send(json);
@@ -507,4 +508,26 @@ function getSelectedDate(li, month) {
         selectedDate.push(Number(selectedSpans[i].innerHTML));
     }
     return selectedDate;
+}
+
+function clearCalendar(elem) {
+    while (!elem.classList.contains('canvas')) {
+        elem = elem.parentElement;
+    }
+    elem.remove();
+}
+
+function downloadCalendarImage(elem) {
+    while (!elem.classList.contains('canvas')) {
+        elem = elem.parentElement;
+    }
+    const canvasElem = document.getElementById('canvas');
+    const linkElem = document.getElementById('download_link');
+
+    html2canvas(elem).then(canvas => {
+        canvasElem.src = canvas.toDataURL();
+        linkElem.href = canvas.toDataURL('image/png');
+        linkElem.download = 'table.png';
+        linkElem.click();
+    });
 }
