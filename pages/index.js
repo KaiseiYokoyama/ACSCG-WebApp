@@ -482,9 +482,21 @@ function submit() {
             div.classList.add('card');
             div.innerHTML = this.responseText;
 
+            let cardAction = document.createElement('div');
+            cardAction.classList.add('card-action');
+            cardAction.innerHTML = '<a onclick="clearCalendar(this)" class="btn btn-outlined clear">' +
+                '   <span>clear</span>' +
+                '   <i class="material-icons left">close</i>' +
+                '</a>' +
+                '<a onclick="getCalendarImage(this)" class="btn right download-image">' +
+                '   <span>Download Image</span>' +
+                '   <i class="material-icons left">image</i> ' +
+                '</a>';
+            div.appendChild(cardAction);
+
             document.querySelector('body .canvases').appendChild(div);
         }
-    }
+    };
     xhr.send(json);
 }
 

@@ -61,9 +61,9 @@ pub mod create_html {
         // js -> document
         let mut document = Element::create("html");
 
-        // head領域を追加
-        let head = create_head(&input);
-        document.append(head);
+        // head領域を追加 todo
+//        let head = create_head(&input);
+//        document.append(head);
 
         // body領域を追加
         let mut body = create_body(&input);
@@ -98,28 +98,11 @@ pub mod create_html {
         materialicons.set_attribute("href", "https://fonts.googleapis.com/icon?family=Material+Icons");
         materialicons.set_attribute("rel", "stylesheet");
 
-        let mut html2canvas = Element::create("script");
-        html2canvas.set_attribute("href", "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js");
-
-        let mut script = Element::create("script");
-        script.set_text(
-            &"document.addEventListener('DOMContentLoaded', function(){\
-                  html2canvas(document.querySelector('body')).then(canvas => {
-                        canvasElement.src = canvas.toDataURL();
-                        linkElement.href = canvas.toDataURL('image/png');
-                        linkElement.download = 'table.png';
-                        linkElement.click();
-                   });\
-            });".to_string()
-        );
-
         // append to head
         head.append(title);
         head.append(materializecss_css);
         head.append(materializecss_js);
         head.append(materialicons);
-        head.append(html2canvas);
-        head.append(script);
 
         return head;
     }
