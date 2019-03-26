@@ -27,8 +27,12 @@ fn html2canvas() -> Option<NamedFile> {
 }
 
 #[post("/generate", data = "<string>")]
-fn generate_calc(string: String) -> String {
-    return crate::create_calendar(string);
+fn generate_calc(string: String) -> Option<String> {
+    let res = crate::create_calendar(string);
+    if res == String::new() {
+        return None;
+    }
+    return Option::Some(res);
 }
 
 pub fn launch() {

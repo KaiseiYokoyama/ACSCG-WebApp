@@ -275,6 +275,11 @@ pub mod input {
             pub title: String,
             // 日程
             pub dates: Vec<Date>,
+            // マーカーの色(cssのrgba形式)
+            pub color: String,
+            // マーカーに影をつけるかどうか
+            pub shadow: bool,
+
         }
 
         /// イベントの開催日程

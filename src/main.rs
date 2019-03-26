@@ -26,7 +26,10 @@ pub fn main() {
 
 pub fn create_calendar(json: String) -> String {
     // struct Input化した入力ファイル
-    let input: Input = serde_json::from_str(&json).unwrap();
+    let input: Input = match serde_json::from_str(&json) {
+        Result::Ok(i) => { i }
+        Result::Err(e) => { return String::new(); }
+    };
 
     let mut limit_of_events = 0;
     loop {
@@ -202,7 +205,7 @@ pub mod create_html {
         let schedule = calc_calendar(input);
 
         // scheduleを月ごとに分ける
-        let mut schedules_monthly: Vec<Vec<(NaiveDate, Option<i32>)>> = Vec::new();
+        let mut schedules_monthly: Vec<Vec<(NaiveDate, Option<usize>)>> = Vec::new();
         let mut m = 0;
         let mut index = 0;
         for sch in schedule {
@@ -232,7 +235,7 @@ pub mod create_html {
 //            println!("{}", &title.to_string());
             calendar.append(title);
 
-            let table = create_calendar_table(&schedule_monthly);
+            let table = create_calendar_table(input,&schedule_monthly);
             calendar.append(table);
 
             // 格納
@@ -313,7 +316,7 @@ pub mod create_html {
     }
 
     /// html::body::main::calendars::calendar::table領域を作成する
-    fn create_calendar_table(schedule_monthly: &Vec<(NaiveDate, Option<i32>)>) -> Element {
+    fn create_calendar_table(input: &Input, schedule_monthly: &Vec<(NaiveDate, Option<usize>)>) -> Element {
         let mut table = Element::create("table");
         table.add_class("calendar-body");
 
@@ -374,6 +377,10 @@ pub mod create_html {
                             if let Some(event_index) = eve {
                                 span.set_attribute("event_index", &format!("{}", event_index));
                                 span.add_class("circled");
+                                // イベントマーカーのshadowが有効なとき
+                                if input.events[event_index.clone()].shadow {
+                                    span.add_class("z-depth-2");
+                                }
                             }
 
                             td.append(span);
@@ -396,7 +403,7 @@ pub mod create_html {
     }
 
     /// コンピュータ上にカレンダーを再現する
-    fn calc_calendar(input: &Input) -> Vec<(NaiveDate, Option<i32>)> {
+    fn calc_calendar(input: &Input) -> Vec<(NaiveDate, Option<usize>)> {
         // 何月から何月までのcalendarを作成する必要があるのかを探る
         let mut min_month = 12;
         let mut max_month = 1;
@@ -413,7 +420,7 @@ pub mod create_html {
         let mut day = NaiveDate::from_ymd(input.year, min_month, 1);
         let the_day_after_last_day = NaiveDate::from_ymd(input.year, max_month + 1, 1);
         // (日時,イベントid)
-        let mut schedules: Vec<(NaiveDate, Option<i32>)> = Vec::new();
+        let mut schedules: Vec<(NaiveDate, Option<usize>)> = Vec::new();
 
         // カレンダーに出力されるdayをvecにしまっておく
         while day != the_day_after_last_day {
@@ -443,7 +450,7 @@ pub mod create_html {
                     // match
                     if day == event_dates[k] {
                         schedules.remove(j);
-                        schedules.insert(j, (event_dates[k], Some(i as i32)));
+                        schedules.insert(j, (event_dates[k], Some(i)));
                     }
                 }
             }
@@ -542,7 +549,7 @@ pub mod create_html {
         let mut css_vec: Vec<CSS> = Vec::new();
 
         for i in 0..input.events.len() {
-            let csss = &mut MakerCSSs::from_i32(i as i32).unwrap().to_csss();
+            let csss = &mut MakerCSSs::csss_from_colorcode(i as u32, &input.events[i].color, true);
             css_vec.append(csss);
         }
 

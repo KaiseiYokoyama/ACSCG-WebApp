@@ -463,6 +463,10 @@ function submit() {
 
         event['dates'] = [april, may];
 
+        event['color'] = window.getComputedStyle(li.querySelector('.color-picker .selected')).backgroundColor;
+
+        event['shadow'] = li.querySelector('.shadow .shadow_checkbox input[type="checkbox"]').checked;
+
         events.push(event);
     }
     data['events'] = events;
