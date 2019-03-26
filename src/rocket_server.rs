@@ -28,11 +28,12 @@ fn html2canvas() -> Option<NamedFile> {
 
 #[post("/generate", data = "<string>")]
 fn generate_calc(string: String) -> Option<String> {
-    let res = crate::create_calendar(string);
-    if res == String::new() {
-        return None;
-    }
-    return Option::Some(res);
+    return crate::create_calendar(string);
+}
+
+#[post("/ical", data = "<string>")]
+fn generate_ical(string: String) -> Option<String> {
+    return crate::create_ical::create(string);
 }
 
 pub fn launch() {
@@ -41,12 +42,11 @@ pub fn launch() {
         .port(8080)
         .finalize().unwrap();
     rocket::custom(config)
-//        .register(catchers![not_found])
         .mount("/", routes![index])
         .mount("/", routes![index_css])
         .mount("/", routes![index_js])
-        .mount("/",routes![generate_calc])
-        .mount("/",routes![html2canvas])
-//        .attach(rocket_contrib::templates::Template::fairing())
+        .mount("/", routes![generate_calc])
+        .mount("/", routes![generate_ical])
+        .mount("/", routes![html2canvas])
         .launch();
 }

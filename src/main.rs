@@ -9,6 +9,7 @@ extern crate serde_derive;
 extern crate serde_json;
 extern crate num_traits;
 extern crate num_derive;
+extern crate icalendar;
 
 mod structs;
 mod rocket_server;
@@ -24,29 +25,17 @@ pub fn main() {
     rocket_server::launch();
 }
 
-pub fn create_calendar(json: String) -> String {
+pub fn create_calendar(json: String) -> Option<String> {
     // struct Input化した入力ファイル
     let input: Input = match serde_json::from_str(&json) {
         Result::Ok(i) => { i }
-        Result::Err(e) => { return String::new(); }
+        Result::Err(e) => { return None; }
     };
-
-    let mut limit_of_events = 0;
-    loop {
-        match MakerCSSs::from_i32(limit_of_events) {
-            None => break,
-            _ => { limit_of_events += 1; }
-        }
-    }
-    if input.events.len() > limit_of_events as usize {
-        println!("イベントの種類は{}つまでです", limit_of_events);
-        return String::new();
-    }
 
     // html生成
     let html = create_html::create(input);
 
-    return html;
+    return Some(html);
 }
 
 pub mod create_html {
@@ -63,10 +52,6 @@ pub mod create_html {
     pub fn create(input: Input) -> String {
         // js -> document
         let mut document = Element::create("html");
-
-        // head領域を追加 todo
-//        let head = create_head(&input);
-//        document.append(head);
 
         // body領域を追加
         let mut body = create_body(&input);
@@ -281,67 +266,25 @@ pub mod create_html {
         let mut title = Element::create("div");
         title.add_class("calendar-title row");
 
-        // calendarをhtmlに変換
-        {
-            // icon left
-//            {
-//                // wrapper
-//                let mut div = Element::create("div");
-//                div.add_class("col s2");
-//
-//                // icon
-//                let mut i = Element::create("i");
-//                i.add_class("material-icons");
-//                i.set_text(&"navigate_before".to_string());
-//
-//                // wrapperにiconを追加
-//                div.append(i);
-//
-//                // iconのwrapperをtitleに追加
-//                title.append(div);
-//            }
+        // wrapper
+        let mut div = Element::create("div");
+        div.add_class("col s12 center-align date");
 
-            // title本体
-            {
-                // wrapper
-                let mut div = Element::create("div");
-                div.add_class("col s8 center-align date");
+        let mut span_month = Element::create("span");
+        span_month.add_class("month");
+        span_month.set_text(&month);
 
-                let mut span_month = Element::create("span");
-                span_month.add_class("month");
-                span_month.set_text(&month);
+        let br = Element::create("br");
 
-                let br = Element::create("br");
+        let mut span_year = Element::create("span");
+        span_year.add_class("year");
+        span_year.set_text(&format!("{}", year));
 
-                let mut span_year = Element::create("span");
-                span_year.add_class("year");
-                span_year.set_text(&format!("{}", year));
+        div.append(span_month);
+        div.append(br);
+        div.append(span_year);
 
-                div.append(span_month);
-                div.append(br);
-                div.append(span_year);
-
-                title.append(div);
-            }
-
-            // icon right
-//            {
-//                // wrapper
-//                let mut div = Element::create("div");
-//                div.add_class("col s2");
-//
-//                // icon
-//                let mut i = Element::create("i");
-//                i.add_class("material-icons");
-//                i.set_text(&"navigate_next".to_string());
-//
-//                // wrapperにiconを追加
-//                div.append(i);
-//
-//                // iconのwrapperをtitleに追加
-//                title.append(div);
-//            }
-        }
+        title.append(div);
 
         return title;
     }
@@ -596,5 +539,67 @@ pub mod create_html {
         css.set_text(&style);
 
         return css;
+    }
+}
+
+pub mod create_ical {
+    use chrono::*;
+    use icalendar::*;
+    use super::Input;
+
+
+    pub fn create(json: String) -> Option<String> {
+        // struct Input化した入力ファイル
+        let input: Input = match serde_json::from_str(&json) {
+            Result::Ok(i) => { i }
+            Result::Err(e) => {
+                eprintln!("create_ical:parse failed {}", &json);
+                return None;
+            }
+        };
+
+        let mut calendar = Calendar::new();
+        for event in &input.events {
+            for date in &event.dates {
+                for day in &date.days {
+                    // start
+                    let hour_min_start: Vec<&str> = event.start.as_str().split(":").collect();
+                    let hour_min_end: Vec<&str> = event.end.as_str().split(":").collect();
+                    if hour_min_start.len() == 2 && hour_min_end.len() == 2 {
+                        let hour: u32 = match hour_min_start[0].parse() {
+                            Ok(t) => t,
+                            Err(_) => { return None; }
+                        };
+                        let min: u32 = match hour_min_start[1].parse() {
+                            Ok(t) => t,
+                            Err(_) => { return None; }
+                        };
+                        let mut native_date_time = NaiveDate::from_ymd(input.year, date.month, day.clone());
+                        let utc_date_start = FixedOffset::east(9 * 3600).from_utc_date(&native_date_time).and_hms(hour, min, 0);
+
+                        let hour: u32 = match hour_min_end[0].parse() {
+                            Ok(t) => t,
+                            Err(_) => { return None; }
+                        };
+                        let min: u32 = match hour_min_end[0].parse() {
+                            Ok(t) => t,
+                            Err(_) => { return None; }
+                        };
+                        let utc_date_end = FixedOffset::east(9 * 3600).from_utc_date(&native_date_time).and_hms(hour, min, 0);
+
+                        let mut event = Event::new()
+                            .summary(&event.title)
+                            .starts(utc_date_start)
+                            .ends(utc_date_end)
+                            .description(&event.place)
+                            .done();
+
+                        calendar.add(event);
+                    }
+                }
+            }
+        }
+
+        return Some(calendar.to_string());
     }
 }

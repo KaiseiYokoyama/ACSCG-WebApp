@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var elems = document.querySelectorAll('.timepicker');
     var instances = M.Timepicker.init(elems, {
         twelveHour: false,
@@ -523,7 +523,11 @@ function submit() {
                 '<a onclick="downloadCalendarImage(this)" class="btn right download-image">' +
                 '   <span>Download Image</span>' +
                 '   <i class="material-icons left">image</i> ' +
-                '</a>';
+                '</a>' +
+                '<a onclick="downloadIcal(this)" class="btn btn-outlined right download-ical" json=\''+json+'\'>' +
+                '   <span>Export .ical</span>' +
+                '   <i class="material-icons left">event_note</i> ' +
+                '</a> ';
             div.appendChild(cardAction);
 
             document.querySelector('body .canvases').appendChild(div);
@@ -547,6 +551,24 @@ function clearCalendar(elem) {
         elem = elem.parentElement;
     }
     elem.remove();
+}
+
+function downloadIcal(elem) {
+    let json = JSON.parse(elem.getAttribute('json'));
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/ical');
+    xhr.onload = function () {
+        if (this.status === 200) {
+            var blob = new Blob([this.responseText], {type: 'text/calendar'}); // バイナリデータを作ります。
+            // それ以外はaタグを利用してイベントを発火させます
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.target = '_blank';
+            a.download = json['title'] + '.ical';
+            a.click();
+        }
+    }
+    xhr.send(JSON.stringify(json));
 }
 
 function downloadCalendarImage(elem) {
