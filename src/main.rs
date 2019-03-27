@@ -103,9 +103,17 @@ pub mod create_html {
         let nav = create_nav(input);
         body.append(nav);
 
+        // header領域を追加
+        let header = create_header(input);
+        body.append(header);
+
         // main領域を追加
         let mut main = create_main(input);
         body.append(main);
+
+        // footer領域を追加
+        let footer = create_footer(input);
+        body.append(footer);
 
         return body;
     }
@@ -135,12 +143,16 @@ pub mod create_html {
         let mut main = Element::create("main");
 
         // header領域を追加
-        let header = create_header(input);
-        main.append(header);
+//        let header = create_header(input);
+//        main.append(header);
 
         // calendar領域を追加
         let calendar = create_calendar(input);
         main.append(calendar);
+
+        // footer領域を追加
+//        let footer = create_footer(input);
+//        main.append(footer);
 
         return main;
     }
@@ -264,11 +276,11 @@ pub mod create_html {
     /// html::body::main::calendars::calendar::calendar-title領域を作成する
     fn create_calendar_title(month: String, year: i32) -> Element {
         let mut title = Element::create("div");
-        title.add_class("calendar-title row");
+        title.add_class("calendar-title");
 
         // wrapper
         let mut div = Element::create("div");
-        div.add_class("col s12 center-align date");
+        div.add_class("center-align date");
 
         let mut span_month = Element::create("span");
         span_month.add_class("month");
@@ -292,7 +304,7 @@ pub mod create_html {
     /// html::body::main::calendars::calendar::table領域を作成する
     fn create_calendar_table(input: &Input, schedule_monthly: &Vec<(NaiveDate, Option<usize>)>) -> Option<Element> {
         let mut table = Element::create("table");
-        table.add_class("calendar-body");
+        table.add_class("calendar-body col s12");
 
         // table headを整備する
         {
@@ -435,6 +447,24 @@ pub mod create_html {
         }
 
         return schedules;
+    }
+
+    /// html::body::main::footer領域を作成する
+    fn create_footer(input: &Input) -> Element {
+        let mut footer = Element::create("footer");
+
+        let mut span_address = Element::create("span");
+        span_address.set_text(&input.address);
+        span_address.add_class("right white-text address");
+
+        let mut span_organizer = Element::create("span");
+        span_organizer.set_text(&input.organizer);
+        span_organizer.add_class("right white-text organizer");
+
+        footer.append(span_address);
+        footer.append(span_organizer);
+
+        return footer;
     }
 
     /// style領域(css)を追加

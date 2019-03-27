@@ -265,6 +265,10 @@ pub mod input {
         pub title: String,
         // イベント一覧
         pub events: Vec<Event>,
+        // 主催者
+        pub organizer: String,
+        // 連絡先
+        pub address: String,
     }
 
     pub mod event {

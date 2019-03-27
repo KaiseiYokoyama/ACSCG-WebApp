@@ -181,4 +181,29 @@ h4 i.material-icons {
 
 .canvas table {
     width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.canvas footer {
+    background-color: #ee6e73;
+    min-height: 20px;
+}
+
+.canvas footer span {
+    margin: 0 25px;
+}
+
+.canvas footer span.organizer::before {
+    font-family: 'Material Icons';
+    content: 'person';
+}
+
+.canvas footer span.address::before {
+    font-family: 'Material Icons';
+    content: 'alternate_email';
+}
+
+.canvas .calendar-title .date {
+    width: 100%;
 }

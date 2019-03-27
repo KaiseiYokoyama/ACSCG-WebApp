@@ -465,6 +465,8 @@ function submit() {
     const data = {};
     data['year'] = 2019;
     data['title'] = document.getElementById('calendar_title').value;
+    data['organizer'] = document.getElementById('organizer').value;
+    data['address'] = document.getElementById('address').value;
 
     const events = [];
     const lis = document.querySelectorAll('.events li');
@@ -524,7 +526,7 @@ function submit() {
                 '   <span>Download Image</span>' +
                 '   <i class="material-icons left">image</i> ' +
                 '</a>' +
-                '<a onclick="downloadIcal(this)" class="btn btn-outlined right download-ical" json=\''+json+'\'>' +
+                '<a onclick="downloadIcal(this)" class="btn btn-outlined right download-ical" json=\'' + json + '\'>' +
                 '   <span>Export .ical</span>' +
                 '   <i class="material-icons left">event_note</i> ' +
                 '</a> ';
@@ -575,6 +577,8 @@ function downloadCalendarImage(elem) {
     while (!elem.classList.contains('canvas')) {
         elem = elem.parentElement;
     }
+    // コンソールを消す
+    elem.querySelector('.card-action').style.display = 'none';
     const canvasElem = document.getElementById('canvas');
     const linkElem = document.getElementById('download_link');
 
@@ -584,4 +588,7 @@ function downloadCalendarImage(elem) {
         linkElem.download = 'table.png';
         linkElem.click();
     });
+
+    // コンソールを戻す
+    elem.querySelector('.card-action').style.display = 'block';
 }
