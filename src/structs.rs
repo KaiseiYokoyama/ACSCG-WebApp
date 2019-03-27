@@ -55,7 +55,7 @@ pub mod web {
             }
 
             /// ElementにinnerTextを設定する
-            pub fn set_text(&mut self, text: &String) {
+            pub fn set_text(&mut self, text: &str) {
                 self.text = text.to_string();
             }
         }

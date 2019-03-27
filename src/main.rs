@@ -101,7 +101,7 @@ pub mod create_html {
 
         // nav領域を追加
         let mut nav = create_nav(input);
-        nav.set_attribute("style",&format!("background-color: {} !important;",input.theme));
+        nav.set_attribute("style", &format!("background-color: {} !important;", input.theme));
         body.append(nav);
 
         // header領域を追加
@@ -114,7 +114,7 @@ pub mod create_html {
 
         // footer領域を追加
         let mut footer = create_footer(input);
-        footer.set_attribute("style",&format!("background-color: {} !important;",input.theme));
+        footer.set_attribute("style", &format!("background-color: {} !important;", input.theme));
         body.append(footer);
 
         return body;
@@ -455,6 +455,10 @@ pub mod create_html {
     fn create_footer(input: &Input) -> Element {
         let mut footer = Element::create("footer");
 
+        let mut span_rights = Element::create("span");
+        span_rights.set_text("Powered by Amusement Creators 新歓カレンダージェネレータ: @crome_ITF");
+        span_rights.add_class("left white-text rights");
+
         let mut span_address = Element::create("span");
         span_address.set_text(&input.address);
         span_address.add_class("right white-text address");
@@ -463,6 +467,7 @@ pub mod create_html {
         span_organizer.set_text(&input.organizer);
         span_organizer.add_class("right white-text organizer");
 
+        footer.append(span_rights);
         footer.append(span_address);
         footer.append(span_organizer);
 
