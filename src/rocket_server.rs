@@ -37,11 +37,12 @@ fn generate_ical(string: String) -> Option<String> {
 }
 
 pub fn launch() {
-    let config = Config::build(Environment::Development)
-        .address("localhost")
-        .port(8080)
-        .finalize().unwrap();
-    rocket::custom(config)
+//    let config = Config::build(Environment::Development)
+//        .address("localhost")
+//        .port(8080)
+//        .finalize().unwrap();
+//    rocket::custom(config)
+    rocket::ignite()
         .mount("/", routes![index])
         .mount("/", routes![index_css])
         .mount("/", routes![index_js])

@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 rocket = "*"
+rocket_codegen = "*"
 chrono = "0.4"
 serde = "*"
 serde_derive = "*"
