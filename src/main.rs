@@ -204,7 +204,7 @@ pub mod create_html {
             tr.append(td);
 
             let mut span_place = Element::create("span");
-            span_place.set_text(&input.events[i].place);
+            span_place.set_text(&input.events[i].location);
             span_place.add_class("place");
             let mut td = Element::create("td");
             td.append(span_place);
@@ -596,6 +596,7 @@ pub mod create_ical {
                     let hour_min_start: Vec<&str> = event.start.as_str().split(":").collect();
                     let hour_min_end: Vec<&str> = event.end.as_str().split(":").collect();
                     if hour_min_start.len() == 2 && hour_min_end.len() == 2 {
+                        // 開始時間
                         let hour: u32 = match hour_min_start[0].parse() {
                             Ok(t) => t,
                             Err(_) => { return None; }
@@ -607,6 +608,7 @@ pub mod create_ical {
                         let mut native_date_time = NaiveDate::from_ymd(input.year, date.month, day.clone());
                         let utc_date_start = FixedOffset::east(9 * 3600).from_utc_date(&native_date_time).and_hms(hour, min, 0);
 
+                        // 終了時間
                         let hour: u32 = match hour_min_end[0].parse() {
                             Ok(t) => t,
                             Err(_) => { return None; }
@@ -617,11 +619,14 @@ pub mod create_ical {
                         };
                         let utc_date_end = FixedOffset::east(9 * 3600).from_utc_date(&native_date_time).and_hms(hour, min, 0);
 
+                        // イベント作成
                         let mut event = Event::new()
-                            .summary(&event.title)
+                            .location(&event.location)
+                            .summary(&format!("[{}] {}",&input.organizer,&event.title))
                             .starts(utc_date_start)
                             .ends(utc_date_end)
-                            .description(&event.place)
+                            .append_property(Property::new("ORGANIZER", &input.organizer))
+                            .append_property(Property::new("CONTACT", &input.address))
                             .done();
 
                         calendar.add(event);

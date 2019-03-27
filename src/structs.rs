@@ -284,7 +284,7 @@ pub mod input {
             // 終了時間
             pub end: String,
             // 場所
-            pub place: String,
+            pub location: String,
             // マーカーの色(cssのrgba形式)
             pub color: String,
             // マーカーに影をつけるかどうか

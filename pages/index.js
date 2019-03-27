@@ -495,7 +495,7 @@ function submit() {
 
         event['end'] = li.querySelector('.time .end input').value;
 
-        event['place'] = li.querySelector('.place input').value;
+        event['location'] = li.querySelector('.place input').value;
 
         events.push(event);
     }
@@ -566,7 +566,7 @@ function downloadIcal(elem) {
             var a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.target = '_blank';
-            a.download = json['title'] + '.ical';
+            a.download = json['title'] + '.ics';
             a.click();
         }
     }
