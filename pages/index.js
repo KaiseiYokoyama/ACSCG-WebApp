@@ -418,7 +418,6 @@ function selectColor(elem) {
         element.classList.remove('selected');
     }
     const color = window.getComputedStyle(elem).backgroundColor;
-    console.log(color);
 
     elem.innerHTML = '<i class="material-icons">done</i>selected';
     elem.classList.add('selected');
@@ -426,6 +425,18 @@ function selectColor(elem) {
         elem = elem.parentElement;
     }
     elem.querySelector('.collapsible-header span.circled').style.backgroundColor = color;
+}
+
+function selectTheme(elem) {
+    const children = elem.parentElement.children;
+    for (let index = 0; index < children.length; index++) {
+        const element = children[index];
+        element.innerHTML = '';
+        element.classList.remove('selected');
+    }
+
+    elem.innerHTML = '<i class="material-icons">done</i>selected';
+    elem.classList.add('selected');
 }
 
 function shadowOnOff(elem) {
@@ -467,6 +478,7 @@ function submit() {
     data['title'] = document.getElementById('calendar_title').value;
     data['organizer'] = document.getElementById('organizer').value;
     data['address'] = document.getElementById('address').value;
+    data['theme'] = window.getComputedStyle(document.getElementById('theme-picker').querySelector('.selected')).backgroundColor;
 
     const events = [];
     const lis = document.querySelectorAll('.events li');

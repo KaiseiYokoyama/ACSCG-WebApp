@@ -100,7 +100,8 @@ pub mod create_html {
         let mut body = Element::create("body");
 
         // nav領域を追加
-        let nav = create_nav(input);
+        let mut nav = create_nav(input);
+        nav.add_class("theme");
         body.append(nav);
 
         // header領域を追加
@@ -112,7 +113,8 @@ pub mod create_html {
         body.append(main);
 
         // footer領域を追加
-        let footer = create_footer(input);
+        let mut footer = create_footer(input);
+        footer.add_class("theme");
         body.append(footer);
 
         return body;
@@ -552,8 +554,6 @@ pub mod create_html {
 
     /// CSSのうち入力(input)によって変化する部分を出力する
     fn create_style_dynamic(input: &Input) -> Element {
-        let mut css = Element::create("style");
-
         let mut css_vec: Vec<CSS> = Vec::new();
 
         for i in 0..input.events.len() {
@@ -561,6 +561,12 @@ pub mod create_html {
             css_vec.append(csss);
         }
 
+        // theme color
+        let mut css = CSS::create(".theme");
+        css.push_declaration("background-color", &format!("{} !important", input.theme));
+        css_vec.push(css);
+
+        let mut css = Element::create("style");
         let mut style = String::new();
         for css in css_vec {
             style = format!("{}{}", style, css.to_html());
@@ -622,7 +628,7 @@ pub mod create_ical {
                         // イベント作成
                         let mut event = Event::new()
                             .location(&event.location)
-                            .summary(&format!("[{}] {}",&input.organizer,&event.title))
+                            .summary(&format!("[{}] {}", &input.organizer, &event.title))
                             .starts(utc_date_start)
                             .ends(utc_date_end)
                             .append_property(Property::new("ORGANIZER", &input.organizer))

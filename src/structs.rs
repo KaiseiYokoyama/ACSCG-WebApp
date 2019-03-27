@@ -269,6 +269,8 @@ pub mod input {
         pub organizer: String,
         // 連絡先
         pub address: String,
+        // theme color
+        pub theme: String,
     }
 
     pub mod event {
