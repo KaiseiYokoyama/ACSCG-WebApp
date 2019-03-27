@@ -101,7 +101,7 @@ pub mod create_html {
 
         // nav領域を追加
         let mut nav = create_nav(input);
-        nav.add_class("theme");
+        nav.set_attribute("style",&format!("background-color: {} !important;",input.theme));
         body.append(nav);
 
         // header領域を追加
@@ -114,7 +114,7 @@ pub mod create_html {
 
         // footer領域を追加
         let mut footer = create_footer(input);
-        footer.add_class("theme");
+        footer.set_attribute("style",&format!("background-color: {} !important;",input.theme));
         body.append(footer);
 
         return body;
@@ -560,11 +560,6 @@ pub mod create_html {
             let csss = &mut MakerCSSs::csss_from_colorcode(i as u32, &input.events[i].color, true);
             css_vec.append(csss);
         }
-
-        // theme color
-        let mut css = CSS::create(".theme");
-        css.push_declaration("background-color", &format!("{} !important", input.theme));
-        css_vec.push(css);
 
         let mut css = Element::create("style");
         let mut style = String::new();
