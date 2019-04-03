@@ -199,11 +199,6 @@ h4 i.material-icons {
     content: 'person';
 }
 
-.canvas footer span.address::before {
-    font-family: 'Material Icons';
-    content: 'alternate_email';
-}
-
 .canvas .calendar-title .date {
     width: 100%;
 }

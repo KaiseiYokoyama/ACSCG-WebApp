@@ -21,9 +21,15 @@ use crate::structs::input::Input;
 use crate::structs::web::css::MakerCSSs;
 use num_traits::FromPrimitive;
 
+use rocket::{Request, Data, Outcome, Outcome::*};
+use rocket::data::{self, FromDataSimple};
+use rocket::http::{Status, ContentType};
+
 pub fn main() {
     rocket_server::launch();
 }
+
+const LIMIT: u64 = 4096;
 
 pub fn create_calendar(json: String) -> Option<String> {
     // struct Input化した入力ファイル
@@ -362,7 +368,7 @@ pub mod create_html {
                             // 日付を出力する
                             let mut span = Element::create("span");
                             span.set_text(&format!("{}", index + 1));
-                            if index < 10 { span.add_class("digit"); }
+                            if index < 9 { span.add_class("digit"); }
                             // イベントがある日を出力したとき
                             if let Some(event_index) = eve {
                                 no_event = false;
